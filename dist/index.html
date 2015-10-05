@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<head>
+  <title>Simple demo</title>
+</head>
+<body>
+  <h1>Mouse moving</h1>
+  <div class="results">
+    <div class="current">
+      <div class="current-x"><span class="label">X:</span><span class="current-x-value"></span></div>
+      <div class="current-y"><span class="label">Y:</span><span class="current-y-value"></span></div>
+    </div>
+    <div class="max">
+      <div class="max-x"><span class="label">Max X:</span><span class="max-x-value"></span></div>
+      <div class="max-y"><span class="label">Max Y:</span><span class="max-y-value"></span></div>
+    </div>
+  </div>
+  <script async type="application/javascript" src="MouseMoveListener.js"></script>
+  <script async type="application/javascript" src="/lib/zepto.min.js" onload="new MouseMoveListener();"></script>
+</body>
