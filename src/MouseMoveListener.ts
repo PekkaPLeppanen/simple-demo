@@ -2,8 +2,10 @@
 
 class MouseMoveListener {
 
-    private tmpX: number;
-    private tmpY: number;
+    private mouseX: number;
+    private mouseY: number;
+    // private movementX: number;
+    // private movementY: number;
     private movementXEl: ZeptoCollection;
     private movementYEl: ZeptoCollection;
 
@@ -11,6 +13,17 @@ class MouseMoveListener {
     private maxY: number;
     private maxMovementXEl: ZeptoCollection;
     private maxMovementYEl: ZeptoCollection;
+
+    private accelerationElements: {
+        vector: ZeptoCollection;
+        xAxis: ZeptoCollection;
+        yAxis: ZeptoCollection;
+    };
+
+    private vectorPosition: {
+        x: number;
+        y: number;
+    };
 
     private checkMaxValues(x: number, y: number) {
 
@@ -25,26 +38,38 @@ class MouseMoveListener {
 
     }
 
-    private  handleEvent(event: MouseEvent): void {
+    private updateAcceleration() {
 
-        const movementX = event.x - this.tmpX;
-        this.movementXEl.text(movementX.toString());
-        this.movementXEl.css('color', movementX < 0 ? 'red' : 'black');
+        const x = this.mouseX - this.vectorPosition.x;
+        const y = this.mouseY - this.vectorPosition.y;
 
-        const movementY = this.tmpY - event.y;
-        this.movementYEl.text(movementY.toString());
-        this.movementYEl.css('color', movementY < 0 ? 'red' : 'black');
+        this.accelerationElements.vector.css({
+            'transform': 'rotate(' + Vector.angle(x, y) + 'deg)',
+            'width': Vector.length(x, y) + 'px'
+        });
+
+    }
+
+    private handleMouseEvent(event: MouseEvent): boolean {
+
+        this.mouseX = event.x;
+        this.mouseY = event.y;
+
+        this.movementXEl.text(this.mouseX.toString());
+
+        this.movementYEl.text(this.mouseY.toString());
 
         this.checkMaxValues(event.x, event.y);
+        this.updateAcceleration();
 
-        this.tmpX = event.x;
-        this.tmpY = event.y;
+        return true;
+
     }
 
     constructor() {
 
-        this.tmpX = 0;
-        this.tmpY = 0;
+        this.mouseX = 0;
+        this.mouseY = 0;
 
         this.maxX = 0;
         this.maxY = 0;
@@ -57,10 +82,20 @@ class MouseMoveListener {
             this.maxMovementXEl = $('.max-x-value');
             this.maxMovementYEl = $('.max-y-value');
 
-            document.addEventListener('mousemove', this.handleEvent.bind(this), false);
+            this.accelerationElements = {
+                vector: $('.acceleration-vector'),
+                xAxis: $('.acceleration-x'),
+                yAxis: $('.acceleration-y')
+            };
+
+            this.vectorPosition = {
+                x: this.accelerationElements.vector.get(0).getBoundingClientRect().left,
+                y: this.accelerationElements.vector.get(0).getBoundingClientRect().top
+            };
+
+            $(document).on('mousemove', this.handleMouseEvent.bind(this));
 
         });
-
 
     }
 

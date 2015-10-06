@@ -1,8 +1,8 @@
 doctype html
 head
+    meta(charset="utf-8")
     title Simple demo
-
-
+    link(type="text/css" rel="stylesheet" media="screen" href="styles.css")
 body
     h1 Mouse moving
     .results
@@ -20,6 +20,8 @@ body
             .max-y
                 span.label Max Y:
                 span.max-y-value
-
+        .graph
+            .acceleration-vector
+    script(async type="application/javascript" src="Vector.js")
     script(async type="application/javascript" src="MouseMoveListener.js")
-    script(async type="application/javascript" src="/lib/zepto.min.js" onload="new MouseMoveListener();")
+    script(async type="application/javascript" src="../lib/zepto.min.js" onload="new MouseMoveListener();")

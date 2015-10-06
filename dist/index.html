@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <head>
+  <meta charset="utf-8">
   <title>Simple demo</title>
+  <link type="text/css" rel="stylesheet" media="screen" href="styles.css">
 </head>
 <body>
   <h1>Mouse moving</h1>
@@ -13,7 +15,11 @@
       <div class="max-x"><span class="label">Max X:</span><span class="max-x-value"></span></div>
       <div class="max-y"><span class="label">Max Y:</span><span class="max-y-value"></span></div>
     </div>
+    <div class="graph">
+      <div class="acceleration-vector"></div>
+    </div>
   </div>
+  <script async type="application/javascript" src="Vector.js"></script>
   <script async type="application/javascript" src="MouseMoveListener.js"></script>
-  <script async type="application/javascript" src="/lib/zepto.min.js" onload="new MouseMoveListener();"></script>
+  <script async type="application/javascript" src="../lib/zepto.min.js" onload="new MouseMoveListener();"></script>
 </body>

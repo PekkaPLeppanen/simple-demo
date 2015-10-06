@@ -2,8 +2,8 @@
 var MouseMoveListener = (function () {
     function MouseMoveListener() {
         var _this = this;
-        this.tmpX = 0;
-        this.tmpY = 0;
+        this.mouseX = 0;
+        this.mouseY = 0;
         this.maxX = 0;
         this.maxY = 0;
         Zepto(function ($) {
@@ -11,7 +11,16 @@ var MouseMoveListener = (function () {
             _this.movementYEl = $('.current-y-value');
             _this.maxMovementXEl = $('.max-x-value');
             _this.maxMovementYEl = $('.max-y-value');
-            document.addEventListener('mousemove', _this.handleEvent.bind(_this), false);
+            _this.accelerationElements = {
+                vector: $('.acceleration-vector'),
+                xAxis: $('.acceleration-x'),
+                yAxis: $('.acceleration-y')
+            };
+            _this.vectorPosition = {
+                x: _this.accelerationElements.vector.get(0).getBoundingClientRect().left,
+                y: _this.accelerationElements.vector.get(0).getBoundingClientRect().top
+            };
+            $(document).on('mousemove', _this.handleMouseEvent.bind(_this));
         });
     }
     MouseMoveListener.prototype.checkMaxValues = function (x, y) {
@@ -24,16 +33,22 @@ var MouseMoveListener = (function () {
             this.maxMovementYEl.text(y.toString());
         }
     };
-    MouseMoveListener.prototype.handleEvent = function (event) {
-        var movementX = event.x - this.tmpX;
-        this.movementXEl.text(movementX.toString());
-        this.movementXEl.css('color', movementX < 0 ? 'red' : 'black');
-        var movementY = this.tmpY - event.y;
-        this.movementYEl.text(movementY.toString());
-        this.movementYEl.css('color', movementY < 0 ? 'red' : 'black');
+    MouseMoveListener.prototype.updateAcceleration = function () {
+        var x = this.mouseX - this.vectorPosition.x;
+        var y = this.mouseY - this.vectorPosition.y;
+        this.accelerationElements.vector.css({
+            'transform': 'rotate(' + Vector.angle(x, y) + 'deg)',
+            'width': Vector.length(x, y) + 'px'
+        });
+    };
+    MouseMoveListener.prototype.handleMouseEvent = function (event) {
+        this.mouseX = event.x;
+        this.mouseY = event.y;
+        this.movementXEl.text(this.mouseX.toString());
+        this.movementYEl.text(this.mouseY.toString());
         this.checkMaxValues(event.x, event.y);
-        this.tmpX = event.x;
-        this.tmpY = event.y;
+        this.updateAcceleration();
+        return true;
     };
     return MouseMoveListener;
 })();
