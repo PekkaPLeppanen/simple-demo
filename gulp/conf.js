@@ -5,6 +5,7 @@ var path = require('path');
 var paths = {
     src: 'src',
     dist: 'dist',
+    styles: 'styles/**/*.less',
     tmp: '.tmp',
     types: path.join('types', 'tsd.d.ts'),
     test: 'test'
