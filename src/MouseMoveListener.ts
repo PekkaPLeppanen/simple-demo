@@ -66,6 +66,13 @@ class MouseMoveListener {
 
     }
 
+    private resetVector() {
+        this.accelerationElements.vector.css({
+            'transform': 'rotate(0deg)',
+            'width': '140px'
+        });
+    }
+
     constructor() {
 
         this.mouseX = 0;
@@ -93,7 +100,15 @@ class MouseMoveListener {
                 y: this.accelerationElements.vector.get(0).getBoundingClientRect().top
             };
 
-            $(document).on('mousemove', this.handleMouseEvent.bind(this));
+            var onMouseMove: Function = Utils.throttle(this.handleMouseEvent, 30, this);
+            var onMouseMoveStop: Function = Utils.debounce(this.resetVector, 1000, this);
+
+            $(document).on({
+                'mousemove': onMouseMove
+            });
+            $(document).on({
+                'mousemove': onMouseMoveStop
+            });
 
         });
 

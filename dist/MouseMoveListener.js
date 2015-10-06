@@ -20,7 +20,14 @@ var MouseMoveListener = (function () {
                 x: _this.accelerationElements.vector.get(0).getBoundingClientRect().left,
                 y: _this.accelerationElements.vector.get(0).getBoundingClientRect().top
             };
-            $(document).on('mousemove', _this.handleMouseEvent.bind(_this));
+            var onMouseMove = Utils.throttle(_this.handleMouseEvent, 30, _this);
+            var onMouseMoveStop = Utils.debounce(_this.resetVector, 1000, _this);
+            $(document).on({
+                'mousemove': onMouseMove
+            });
+            $(document).on({
+                'mousemove': onMouseMoveStop
+            });
         });
     }
     MouseMoveListener.prototype.checkMaxValues = function (x, y) {
@@ -49,6 +56,12 @@ var MouseMoveListener = (function () {
         this.checkMaxValues(event.x, event.y);
         this.updateAcceleration();
         return true;
+    };
+    MouseMoveListener.prototype.resetVector = function () {
+        this.accelerationElements.vector.css({
+            'transform': 'rotate(0deg)',
+            'width': '140px'
+        });
     };
     return MouseMoveListener;
 })();
