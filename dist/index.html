@@ -1,23 +1,2 @@
-<!DOCTYPE html>
-<head>
-  <meta charset="utf-8">
-  <title>Simple demo</title>
-  <link type="text/css" rel="stylesheet" media="screen" href="styles.css">
-</head>
-<body>
-  <h1>Mouse moving</h1>
-  <div class="repository"><span>Source at</span><a href="https://github.com/PekkaPLeppanen/simple-demo" title="Github link">Github</a></div>
-  <div class="results">
-    <div class="current">
-      <div class="current-x"><span class="label">X:</span><span class="current-x-value"></span></div>
-      <div class="current-y"><span class="label">Y:</span><span class="current-y-value"></span></div>
-    </div>
-    <div class="graph">
-      <div class="acceleration-vector"></div>
-    </div>
-  </div>
-  <script type="application/javascript" src="Utils.js"></script>
-  <script type="application/javascript" src="Vector.js"></script>
-  <script type="application/javascript" src="MouseMoveListener.js"></script>
-  <script type="application/javascript" src="zepto.min.js" onload="new MouseMoveListener();"></script>
-</body>
+<!DOCTYPE html><head><meta charset="utf-8"><title>Simple demo | Pekka Leppänen</title><link type="text/css" rel="stylesheet" media="screen" href="styles.css"></head><body><h1>Vector chasing the mouse</h1><h2>Source code</h2><div class="repository"><span>Source at</span><a href="https://github.com/PekkaPLeppanen/simple-demo" title="Github link">Github</a></div><div class="results"><div class="current"><div class="current-x"><span class="label">Current mouse X:</span><span class="current-x-value"></span></div><div class="current-y"><span class="label">Y:</span><span class="current-y-value"></span></div></div></div><div class="graph"><div class="acceleration-vector"></div></div><h2>What have I done?</h2><ul class="task-list"><li>Get an idea for a demo that is simple enough.</li><li>Setup my environment:<ul><li>Open my favorite IDE (WebStorm).</li><li>Init<b>GitHub</b>repo.</li><li>Add some Gulp tasks for automation for the project. I'm using<b>TypeScript</b>,<b>Jade</b>and<b>Less</b>to make my dev life easier.</li></ul></li><li>Created a<a href="https://github.com/PekkaPLeppanen/simple-demo/blob/master/src/index.jade"><b>markup</b></a>for the site.</li><li>Created<a href="https://github.com/PekkaPLeppanen/simple-demo/blob/master/src/MouseMoveListener.ts"><b>MouseMoveListener</b></a>class that handles the events of the mouse and vector decoration.</li><li>Created<a href="https://github.com/PekkaPLeppanen/simple-demo/blob/master/src/Vector.ts"><b>Vector</b></a>module that provides the mathematics behind the vector angle and length.</li><li>The vector itself is swinging around with<b>CSS only.</b>JavaScript just provides the values.</li><li>Last thing was to improve the performance, because listening mouse movements is pretty intense.
+So I added a throttle function for the handler. See for<a href="https://github.com/PekkaPLeppanen/simple-demo/blob/master/src/Utils.ts"><b>Utils</b></a>module in the source.</li></ul><script type="application/javascript" src="Utils.js"></script><script type="application/javascript" src="Vector.js"></script><script type="application/javascript" src="MouseMoveListener.js"></script><script type="application/javascript" src="zepto.min.js" onload="new MouseMoveListener();"></script></body>

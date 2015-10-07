@@ -5,9 +5,23 @@
     box-sizing: border-box;
 }
 body {
+    color: #333;
     font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 16px;
     line-height: 1;
+}
+li {
+    padding: 0.3125em;
+    ul {
+        padding-top: 5px;
+    }
+}
+a, b {
+    padding: 0.3125em;
+    color: #333;
+}
+.task-list {
+    font-size: 0.875em;
 }
 .repository {
     padding: 1.25em;
@@ -56,5 +70,13 @@ body {
             right: -20px;
             top: -8px;
         }
+    }
+}
+.current {
+    &-x, &-y {
+        float: left;
+    }
+    &-y {
+        margin-left: 1em;
     }
 }

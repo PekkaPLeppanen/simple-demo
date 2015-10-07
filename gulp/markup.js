@@ -11,7 +11,7 @@ gulp.task('compile:markups', function () {
     }
 
     return gulp.src(conf.paths.markups)
-        .pipe($.consolidate('jade', { basedir: conf.paths.src, doctype: 'html', pretty: '  ' }))
+        .pipe($.consolidate('jade', { basedir: conf.paths.src, doctype: 'html', pretty: false }))
         .pipe($.rename(renameToHtml))
         .pipe(gulp.dest(conf.paths.dist))
 });

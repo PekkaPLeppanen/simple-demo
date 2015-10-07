@@ -1,25 +1,74 @@
-doctype html
+doctype
 head
     meta(charset="utf-8")
-    title Simple demo
+    title Simple demo | Pekka Leppänen
     link(type="text/css" rel="stylesheet" media="screen" href="styles.css")
 body
-    h1 Mouse moving
+    h1 Vector chasing the mouse
 
+    //- Link to source
+    h2 Source code
     .repository
         span Source at
         a(href="https://github.com/PekkaPLeppanen/simple-demo" title="Github link") Github
 
+    //- The output of the sauce comes here
     .results
         .current
             .current-x
-                span.label X:
+                span.label Current mouse X:
                 span.current-x-value
             .current-y
                 span.label Y:
                 span.current-y-value
-        .graph
-            .acceleration-vector
+    .graph
+        .acceleration-vector
+
+    h2 What have I done?
+    ul.task-list
+        li Get an idea for a demo that is simple enough.
+        li Setup my environment:
+            ul
+                li
+                    | Open my favorite IDE (WebStorm).
+                li
+                    | Init
+                    b GitHub
+                    | repo.
+                li
+                    | Add some Gulp tasks for automation for the project. I'm using
+                    b TypeScript
+                    | ,
+                    b Jade
+                    | and
+                    b Less
+                    | to make my dev life easier.
+        li
+            | Created a
+            a(href="https://github.com/PekkaPLeppanen/simple-demo/blob/master/src/index.jade")
+                b markup
+            | for the site.
+        li
+            | Created
+            a(href="https://github.com/PekkaPLeppanen/simple-demo/blob/master/src/MouseMoveListener.ts")
+                b MouseMoveListener
+            | class that handles the events of the mouse and vector decoration.
+        li
+            | Created
+            a(href="https://github.com/PekkaPLeppanen/simple-demo/blob/master/src/Vector.ts")
+                b Vector
+            | module that provides the mathematics behind the vector angle and length.
+        li
+            | The vector itself is swinging around with
+            b CSS only.
+            | JavaScript just provides the values.
+        li
+            | Last thing was to improve the performance, because listening mouse movements is pretty intense.
+            | So I added a throttle function for the handler. See for
+            a(href="https://github.com/PekkaPLeppanen/simple-demo/blob/master/src/Utils.ts")
+                b Utils
+            | module in the source.
+
     script(type="application/javascript" src="Utils.js")
     script(type="application/javascript" src="Vector.js")
     script(type="application/javascript" src="MouseMoveListener.js")

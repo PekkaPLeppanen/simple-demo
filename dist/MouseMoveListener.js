@@ -1,5 +1,12 @@
 'use strict';
+/**
+ * Handles the events of the mouse and vector decoration
+ */
 var MouseMoveListener = (function () {
+    /**
+     * Initiate variables with a help of Zepto
+     * @constructor
+     */
     function MouseMoveListener() {
         var _this = this;
         this.mouseX = 0;
@@ -26,7 +33,10 @@ var MouseMoveListener = (function () {
             });
         });
     }
-    MouseMoveListener.prototype.updateAcceleration = function () {
+    /**
+     * Updates the angle and length of the vector via CSS. The length cannot exceed the defined maximum length.
+     */
+    MouseMoveListener.prototype.updateVector = function () {
         var x = this.mouseX - this.vectorPosition.x;
         var y = this.mouseY - this.vectorPosition.y;
         var length = Vector.length(x, y);
@@ -35,19 +45,27 @@ var MouseMoveListener = (function () {
             'width': (length > this.vectorMaxLength ? this.vectorMaxLength : length) + 'px'
         });
     };
-    MouseMoveListener.prototype.handleMouseEvent = function (event) {
-        this.mouseX = event.x;
-        this.mouseY = event.y;
-        this.movementXEl.text(this.mouseX.toString());
-        this.movementYEl.text(this.mouseY.toString());
-        this.updateAcceleration();
-        return true;
-    };
+    /**
+     * Sets the css of the vector to a starting point
+     */
     MouseMoveListener.prototype.resetVector = function () {
         this.accelerationElements.vector.css({
             'transform': 'rotate(0deg)',
             'width': this.vectorMaxLength + 'px'
         });
+    };
+    /**
+     * Mouse event listener. Does not support touch.
+     * @param event
+     * @returns {boolean}
+     */
+    MouseMoveListener.prototype.handleMouseEvent = function (event) {
+        this.mouseX = event.x;
+        this.mouseY = event.y;
+        this.movementXEl.text(this.mouseX.toString());
+        this.movementYEl.text(this.mouseY.toString());
+        this.updateVector();
+        return true;
     };
     return MouseMoveListener;
 })();

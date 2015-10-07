@@ -1,19 +1,29 @@
+/**
+ * Common utility functions are here
+ */
 var Utils;
 (function (Utils) {
     'use strict';
-    function throttle(fn, threshhold, scope) {
-        var _threshhold = threshhold || 250;
+    /**
+     * Invoke the given function only once in given threshold. Invoke also in the first and last call.
+     * @link https://remysharp.com/2010/07/21/throttling-function-calls
+     * @param fn
+     * @param threshold
+     * @param [scope]
+     * @returns {function(): void}
+     */
+    function throttle(fn, threshold, scope) {
         var last, deferTimer;
         return function () {
             var context = scope || this;
             var now = +new Date, args = arguments;
-            if (last && now < last + _threshhold) {
+            if (last && now < last + threshold) {
                 // hold on to it
                 clearTimeout(deferTimer);
                 deferTimer = setTimeout(function () {
                     last = now;
                     fn.apply(context, args);
-                }, _threshhold);
+                }, threshold);
             }
             else {
                 last = now;
@@ -22,6 +32,13 @@ var Utils;
         };
     }
     Utils.throttle = throttle;
+    /**
+     * Invoke given function only after it has not been called for given a delay
+     * @param fn
+     * @param delay
+     * @param scope
+     * @returns {function(): void}
+     */
     function debounce(fn, delay, scope) {
         var timer = null;
         return function () {

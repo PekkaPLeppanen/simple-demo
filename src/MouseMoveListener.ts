@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Handles the events of the mouse and vector decoration
+ */
 class MouseMoveListener {
 
     private mouseX: number;
@@ -17,7 +20,10 @@ class MouseMoveListener {
         y: number;
     };
 
-    private updateAcceleration() {
+    /**
+     * Updates the angle and length of the vector via CSS. The length cannot exceed the defined maximum length.
+     */
+    private updateVector() {
 
         const x = this.mouseX - this.vectorPosition.x;
         const y = this.mouseY - this.vectorPosition.y;
@@ -30,6 +36,21 @@ class MouseMoveListener {
 
     }
 
+    /**
+     * Sets the css of the vector to a starting point
+     */
+    private resetVector() {
+        this.accelerationElements.vector.css({
+            'transform': 'rotate(0deg)',
+            'width': this.vectorMaxLength + 'px'
+        });
+    }
+
+    /**
+     * Mouse event listener. Does not support touch.
+     * @param event
+     * @returns {boolean}
+     */
     private handleMouseEvent(event: MouseEvent): boolean {
 
         this.mouseX = event.x;
@@ -38,19 +59,16 @@ class MouseMoveListener {
         this.movementXEl.text(this.mouseX.toString());
         this.movementYEl.text(this.mouseY.toString());
 
-        this.updateAcceleration();
+        this.updateVector();
 
         return true;
 
     }
 
-    private resetVector() {
-        this.accelerationElements.vector.css({
-            'transform': 'rotate(0deg)',
-            'width': this.vectorMaxLength + 'px'
-        });
-    }
-
+    /**
+     * Initiate variables with a help of Zepto
+     * @constructor
+     */
     constructor() {
 
         this.mouseX = 0;
