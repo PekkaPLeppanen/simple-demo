@@ -4,6 +4,7 @@ class MouseMoveListener {
 
     private mouseX: number;
     private mouseY: number;
+    private vectorMaxLength: number;
     private movementXEl: ZeptoCollection;
     private movementYEl: ZeptoCollection;
 
@@ -21,9 +22,10 @@ class MouseMoveListener {
         const x = this.mouseX - this.vectorPosition.x;
         const y = this.mouseY - this.vectorPosition.y;
 
+        const length = Vector.length(x, y);
         this.accelerationElements.vector.css({
             'transform': 'rotate(' + Vector.angle(x, y) + 'deg)',
-            'width': Vector.length(x, y) + 'px'
+            'width': (length > this.vectorMaxLength ? this.vectorMaxLength : length) + 'px'
         });
 
     }
@@ -45,7 +47,7 @@ class MouseMoveListener {
     private resetVector() {
         this.accelerationElements.vector.css({
             'transform': 'rotate(0deg)',
-            'width': '140px'
+            'width': this.vectorMaxLength + 'px'
         });
     }
 
@@ -59,13 +61,16 @@ class MouseMoveListener {
             this.movementXEl = $('.current-x-value');
             this.movementYEl = $('.current-y-value');
 
+            this.vectorMaxLength = ($('.graph').width() / 2) - 10;
+
             this.accelerationElements = {
                 vector: $('.acceleration-vector')
             };
 
+            const vectorElementRect = this.accelerationElements.vector.get(0).getBoundingClientRect();
             this.vectorPosition = {
-                x: this.accelerationElements.vector.get(0).getBoundingClientRect().left,
-                y: this.accelerationElements.vector.get(0).getBoundingClientRect().top
+                x: vectorElementRect.left,
+                y: vectorElementRect.top
             };
 
             var onMouseMove: Function = Utils.throttle(this.handleMouseEvent, 30, this);

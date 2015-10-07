@@ -1,4 +1,5 @@
 @pointer-color: #0096EA;
+@border-color: #DDD;
 
 *, *:after, *:before {
     box-sizing: border-box;
@@ -27,6 +28,8 @@ body {
     padding: 1.25em;
 }
 .graph {
+    border: 1px solid @border-color;
+    border-radius: 50%;
     position: relative;
     margin: 40px 0;
     width: 300px;

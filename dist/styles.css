@@ -27,6 +27,8 @@ body {
   padding: 1.25em;
 }
 .graph {
+  border: 1px solid #DDD;
+  border-radius: 50%;
   position: relative;
   margin: 40px 0;
   width: 300px;
