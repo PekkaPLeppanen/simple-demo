@@ -1,9 +1,13 @@
 'use strict';
 
+interface ITouchEvent extends MouseEvent {
+    changedTouches: { screenX: number; screenY: number; }[];
+}
+
 /**
  * Handles the events of the mouse and vector decoration
  */
-class MouseMoveListener {
+class PointerMoveListener {
 
     private mouseX: number;
     private mouseY: number;
@@ -47,7 +51,7 @@ class MouseMoveListener {
     }
 
     /**
-     * Mouse event listener. Does not support touch.
+     * Mouse event listener.
      * @param event
      * @returns {boolean}
      */
@@ -55,6 +59,24 @@ class MouseMoveListener {
 
         this.mouseX = event.x;
         this.mouseY = event.y;
+
+        this.movementXEl.text(this.mouseX.toString());
+        this.movementYEl.text(this.mouseY.toString());
+
+        this.updateVector();
+
+        return true;
+
+    }
+    /**
+     * Touch event listener.
+     * @param event
+     * @returns {boolean}
+     */
+    private handleTouchEvent(event: ITouchEvent): boolean {
+
+        this.mouseX = event.changedTouches[0].screenX;
+        this.mouseY = event.changedTouches[0].screenY;
 
         this.movementXEl.text(this.mouseX.toString());
         this.movementYEl.text(this.mouseY.toString());
@@ -92,13 +114,17 @@ class MouseMoveListener {
             };
 
             var onMouseMove: Function = Utils.throttle(this.handleMouseEvent, 30, this);
-            var onMouseMoveStop: Function = Utils.debounce(this.resetVector, 1000, this);
+            var onTouchMove: Function = Utils.throttle(this.handleTouchEvent, 30, this);
+            var onMoveStop: Function = Utils.debounce(this.resetVector, 1000, this);
 
             $(document).on({
                 'mousemove': onMouseMove
             });
             $(document).on({
-                'mousemove': onMouseMoveStop
+                'touchmove': onTouchMove
+            });
+            $(document).on({
+                'mousemove touchmove': onMoveStop
             });
 
         });

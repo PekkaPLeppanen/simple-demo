@@ -3,8 +3,11 @@ head
     meta(charset="utf-8")
     title Simple demo | Pekka Leppänen
     link(type="text/css" rel="stylesheet" media="screen" href="styles.css")
+    meta(name="copyright" content="&#169; 2015 Pekka Leppänen")
+    meta(name="robots" content="all, index, follow")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
 body
-    h1 Vector chasing the mouse
+    h1 Vector chasing the pointer
 
     //- Link to source
     h2 Source code
@@ -16,7 +19,7 @@ body
     .results
         .current
             .current-x
-                span.label Current mouse X:
+                span.label Current X:
                 span.current-x-value
             .current-y
                 span.label Y:
@@ -50,8 +53,8 @@ body
             | for the site.
         li
             | Created
-            a(href="https://github.com/PekkaPLeppanen/simple-demo/blob/master/src/MouseMoveListener.ts")
-                b MouseMoveListener
+            a(href="https://github.com/PekkaPLeppanen/simple-demo/blob/master/src/PointerMoveListener.ts")
+                b PointerMoveListener
             | class that handles the events of the mouse and vector decoration.
         li
             | Created
@@ -71,5 +74,5 @@ body
 
     script(type="application/javascript" src="Utils.js")
     script(type="application/javascript" src="Vector.js")
-    script(type="application/javascript" src="MouseMoveListener.js")
-    script(type="application/javascript" src="zepto.min.js" onload="new MouseMoveListener();")
+    script(type="application/javascript" src="PointerMoveListener.js")
+    script(type="application/javascript" src="zepto.min.js" onload="new PointerMoveListener();")
